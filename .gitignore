@@ -1,0 +1,10 @@
+node_modules/
+.vscode/launch.json
+lib/**
+package-lock.json
+coverage/
+.nyc_outputbfg-1.13.0.jar
+bfg-1.13.0.jar
+.git.bfg-report
+
+src/config/hosts.json

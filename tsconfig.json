@@ -1,0 +1,12 @@
+{
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"],
+    "compilerOptions": {
+        "module": "commonjs",
+        "resolveJsonModule": true,
+        "target": "es5",
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "outDir": "./lib"
+    }
+}

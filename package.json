@@ -1,0 +1,42 @@
+{
+    "name": "muody-cli",
+    "version": "0.0.1",
+    "description": "Small package to help with my daily routines in work.",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc -p .",
+        "test": "mocha -r ts-node/register src/**/*.spec.ts --reporter=dot"
+    },
+    "keywords": [
+        "cli",
+        "muody",
+        "qa",
+        "docker"
+    ],
+    "author": "Pawel --muody-- Kochanek",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/chalk": "^2.2.0",
+        "@types/execa": "^0.9.0",
+        "@types/figlet": "^1.2.0",
+        "@types/mocha": "^5.2.5",
+        "@types/node": "^10.9.4",
+        "@types/yargs": "^11.1.1",
+        "chai": "^4.1.2",
+        "figlet": "^1.2.0",
+        "mocha": "^5.2.0",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.11.0",
+        "typescript": "^3.0.3"
+    },
+    "dependencies": {
+        "chalk": "^2.4.1",
+        "clear": "^0.1.0",
+        "execa": "^0.10.0",
+        "listr": "^0.14.1",
+        "yargs": "^12.0.1"
+    },
+    "bin": {
+        "muody": "./lib/main.js"
+    }
+}
