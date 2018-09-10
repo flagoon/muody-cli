@@ -1,35 +1,25 @@
 import yargs from 'yargs';
-import { getHostsList } from '../config/hostsFunctions';
 
+import chalk from 'chalk';
 import * as addCommand from '../helpers/yargsModules/addCommand';
 import * as defaultCommand from '../helpers/yargsModules/defaultCommand';
 import * as deleteCommand from '../helpers/yargsModules/deleteCommand';
 import * as updateCommand from '../helpers/yargsModules/updateCommands';
 
-// TODO:https://github.com/yargs/yargs/blob/master/docs/api.md
-// export const argv = yargs
-//     .usage('Usage: $0 <command> [options]')
-//     .describe('b', 'npm run build')
-//     .describe('d', 'stop all dockers, then remove all containers')
-//     .describe('i', 'install libraries from package.json')
-//     .describe('p', 'remove all docker containers and images')
-//     .describe('host', 'choose the host to log into')
-//     .choices('host', getHostsList())
-//     .describe('l', 'open localhost:8090 with credentials for host')
-//     .describe('L', 'open localhost:8090/admin with credentials for host')
-//     .help('h')
-//     .alias({ h: 'help', b: 'build', d: 'docker', p: 'prune', i: 'install', v: 'version' })
-//     .strict()
-//     .version()
-//     .epilog('copyright flagoon 2018').argv;
-
 export const argv = yargs
     .usage('Usage: $0 <command> [options]')
-    // tslint:disable-next-line:no-var-requires
     .command(addCommand)
     .command(updateCommand)
     .command(deleteCommand)
     .command(defaultCommand)
+    .fail((msg, err) => {
+        if (err) {
+            console.log('');
+            console.log(chalk.red(`${err.message} Try muody --help for more info.`));
+            console.log('');
+        }
+        process.exit(1);
+    })
     .help('h')
     .strict()
     .version()
