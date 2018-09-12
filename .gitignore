@@ -8,3 +8,5 @@ bfg-1.13.0.jar
 .git.bfg-report
 
 src/config/hosts.json
+.idea
+.nyc_output

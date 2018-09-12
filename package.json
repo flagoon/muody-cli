@@ -5,7 +5,22 @@
     "main": "index.js",
     "scripts": {
         "build": "tsc -p .",
-        "test": "mocha -r ts-node/register src/**/*.spec.ts --reporter=dot"
+        "test": "nyc mocha -r ts-node/register src/**/*.spec.ts --reporter=dot",
+        "test:coverage": "nyc mocha -r ts-node/register src/**/*.spec.ts"
+    },
+    "nyc": {
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
+        "exclude": [
+            "**/*.d.ts",
+            "**/*.js"
+        ],
+        "reporter": [
+            "html"
+        ],
+        "all": true
     },
     "keywords": [
         "cli",
@@ -25,6 +40,7 @@
         "chai": "^4.1.2",
         "figlet": "^1.2.0",
         "mocha": "^5.2.0",
+        "nyc": "^13.0.1",
         "ts-node": "^7.0.1",
         "tslint": "^5.11.0",
         "typescript": "^3.0.3"
