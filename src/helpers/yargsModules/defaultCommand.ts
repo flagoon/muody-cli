@@ -1,6 +1,7 @@
 import { Arguments, Argv } from 'yargs';
 import { getHostsList } from '../../config/hostsFunctions';
 
+    // TODO: keep track if it will not be needed other files... Then extract to separate module.
 export const command = '*';
 export const describe = 'Generic commands for building, installing and docker.';
 export const builder = (argv: Argv) => {
@@ -15,6 +16,7 @@ export const builder = (argv: Argv) => {
                 alias: 'l',
                 describe: 'Starts localhost using credentials for given host. Host is required.',
                 implies: 'host'
+            // TODO: reconsider, if host should have default value, without config...
             }
         })
         .describe('d', 'Stops all dockers, remove containers and uses npm run start.')

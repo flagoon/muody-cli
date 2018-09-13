@@ -27,6 +27,7 @@ export const argv = yargs
     .version()
     .epilog('copyright flagoon 2018').argv;
 
+// TODO: This is probably garbage ;) But some code could be copy/paste. Will remain for now.
 export default class Args {
     private acceptedArgs: string[] = ['d', 'i', 'b', 'x', 'l'];
     private acceptedCommands: string[] = ['kvm10', 'cux21', 'cux55', 'cux58', 'cux59'];
