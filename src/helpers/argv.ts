@@ -15,12 +15,14 @@ export const argv = yargs
     .fail((msg, err) => {
         if (err) {
             console.log('');
-            console.log(chalk.red(`${err.message} Try muody --help for more info.`));
+            console.log(chalk.black.bgRedBright(`${err.message} Try muody --help for more info.`));
             console.log('');
+            yargs.showHelp();
+            process.exit(1);
         }
-        process.exit(1);
     })
     .help('h')
+    .alias('h', 'help')
     .strict()
     .version()
     .epilog('copyright flagoon 2018').argv;

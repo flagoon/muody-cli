@@ -32,19 +32,12 @@ export const builder = (argv: Argv): Argv =>
             if (!yargs.ip) {
                 throw new Error('IP needs a valid IP number.');
             }
-            if (!yargs.login) {
+            if (yargs.login === '') {
                 throw new Error('If login is provided, it should be a string.');
             }
-            if (!yargs.pass || !yargs.password) {
+            if (yargs.pass === '' || yargs.password === '') {
                 throw new Error('If password is provided, it should be a string.');
             }
         });
 
-export const handler = (args: Arguments) => {
-    if (args.host) {
-        console.log(args.host);
-    } else {
-        console.log('errr');
-    }
-    console.log(args);
-};
+export const handler = (args: Arguments) => args;
