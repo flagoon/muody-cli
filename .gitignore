@@ -1,12 +1,12 @@
-node_modules/
+node_modules/**
 .vscode/launch.json
 lib/**
 package-lock.json
-coverage/
+coverage/**
 .nyc_outputbfg-1.13.0.jar
 bfg-1.13.0.jar
 .git.bfg-report
 
 src/config/hosts.json
-.idea
-.nyc_output
+.idea/**
+.nyc_output/**
