@@ -18,15 +18,17 @@ export const builder = (argv: Argv): Argv =>
       },
       login: {
         describe: 'give the login to be used for login',
+        implies: 'password',
         type: 'string'
       },
       password: {
         alias: 'pass',
         describe: 'give the password',
+        implies: 'login',
         type: 'string'
       }
     })
-    .check((yargs: Arguments) => {
+    .check((yargs: Arguments): boolean => {
       if (!yargs.host) {
         throw new Error('Host parameter needs a string value.');
       }
@@ -39,6 +41,8 @@ export const builder = (argv: Argv): Argv =>
       if (yargs.pass === '' || yargs.password === '') {
         throw new Error('If password is provided, it should be a string.');
       }
-    });
+      return true;
+    })
+    .strict();
 
-export const handler = (args: Arguments) => args;
+export const handler = (argv: Argv): Argv => argv;

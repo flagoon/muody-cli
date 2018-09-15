@@ -16,7 +16,7 @@ const isGivenOptionValid = (options: string[]): boolean => {
 
 export const command = '*';
 export const describe = 'Generic commands for building, installing and docker.';
-export const builder = (argv: Argv) => {
+export const builder = (argv: Argv): Argv => {
   return argv
     .options({
       host: {
@@ -27,29 +27,13 @@ export const builder = (argv: Argv) => {
       localhost: {
         alias: 'l',
         describe:
-          'Starts localhost using credentials for given host. [Host is required].'
+          'Starts localhost using credentials for given host. [Host is required].',
+        implies: 'host'
       }
     })
-    .check((yargs: Arguments) => {
+    .strict()
+    .check((yargs: Arguments): boolean => {
       const { _, $0, ...options } = yargs;
-
-      // this is default command, it will throw error on invalid command.
-      if (_.length !== 0) {
-        throw new Error(`Command "${_}" is not recognized.`);
-      }
-
-      if (options.length === 0) {
-        throw new Error('Default command needs some options.');
-      }
-
-      // if host is empty string (--host) or if it had value, but not in config file, throw error.
-      if (
-        options.host === '' ||
-        (options.host !== undefined &&
-          getHostsList().indexOf(options.host) === -1)
-      ) {
-        throw new Error(`Host argument needs to be in: ${getHostsList()}.`);
-      }
 
       // only valid options will pass. yargs.strict() don't cooperate.
       if (!isGivenOptionValid(Object.keys(options))) {
@@ -58,12 +42,9 @@ export const builder = (argv: Argv) => {
         );
       }
 
-      // localhost shouldn't be called when there is no host given
-      // TODO: reconsider, if host should have default value, without config...
-      if (options.localhost && !options.host) {
-        throw new Error("You can't use localhost option without giving host.");
-      }
+      return true;
     })
+    .strict()
     .describe(
       'd',
       'Stops all dockers, remove containers and uses npm run start.'

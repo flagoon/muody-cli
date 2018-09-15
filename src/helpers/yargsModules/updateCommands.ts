@@ -1,10 +1,10 @@
-import { Argv } from 'yargs';
+import { Arguments, Argv } from 'yargs';
 import { getHostsList } from '../../config/hostsFunctions';
 
 export const command = 'update';
 export const describe =
   'Give the hostname and parameters to change (ip, login or password)';
-export const builder = (argv: Argv) =>
+export const builder = (argv: Argv): Argv =>
   argv.options({
     host: {
       choices: getHostsList(),
@@ -29,5 +29,14 @@ export const builder = (argv: Argv) =>
       implies: 'host',
       type: 'string'
     }
-  });
-export const handler = (argv: Argv) => argv;
+  })
+    .check((yargs: Arguments): boolean => {
+      const { _, $0, ...options } = yargs;
+
+      if (options.ip === undefined && options.login === undefined && options.password === undefined) {
+        throw new Error('You have to show what value should be changed. Add --ip, --login or --password.');
+      }
+      return true;
+    })
+    .strict();
+export const handler = (argv: Argv): Argv => argv;
