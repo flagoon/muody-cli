@@ -2,16 +2,22 @@
 
 import chalk from 'chalk';
 
-import { showHostsContent } from './config/hostsFunctions';
+import fs from 'fs';
+import util from 'util';
+import { deleteHost, handleJSONFile, showHostsContent } from './config/hostsFunctions';
+import { IHosts } from './config/IHosts';
 import { argv } from './helpers/argv';
 import { showLogo } from './helpers/showLogo';
+
+const writeFile = util.promisify(fs.writeFile);
 
 // For glory of the Muody
 console.log(chalk.yellowBright(showLogo('Muody')));
 
 const { _: mainCommands, $0: source, ...args } = argv;
 
-console.log(argv);
-console.log('********************');
-showHostsContent().then(res => console.log(res[argv.host])).catch(err => console.log(err));
-console.log('********************');
+handleJSONFile('delete', args).then(res => {
+    console.log('----');
+    console.log(res);
+    console.log('----');
+});
