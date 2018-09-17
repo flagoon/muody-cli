@@ -29,21 +29,24 @@ export const showHostsContent = async (hostname: string = null): Promise<IHosts>
     return JSON.parse(hostFile);
 };
 
+// TODO: keep an eye on it
 export const createIHostObject = (args: IArgs): IHosts => {
     const { host, ip = '', login = '', password = '' } = args;
 
-    return { [host]: { ip, login, password } }; // {host: { ip: ip, login: login, password: password }}
+    return { ip, login, password }; // {host: { ip: ip, login: login, password: password }}
 };
 
+// TODO: deal with new object and it's types.
 export const handleJSONFile = async (command: string, args: IArgs): Promise<Map<string, IHostData>> => {
     const hostFile: IHosts = await showHostsContent();
     const mapHostFile: Map<string, IHostData> = Map(hostFile);
-    const newHostToAdd = createIHostObject(args);
+    const newHostToAdd: IHosts = createIHostObject(args);
 
     switch (command) {
         case 'add':
-            const increassedHosts: IHosts = createIHostObject(args);
-            console.log(createIHostObject(increassedHosts));
+            console.log(newHostToAdd);
+            console.log(mapHostFile.setIn([args.host], { args.ip, args.login, args.password }));
+
             // const addedHosts: Map<string, IHostData> = mapHostFile.set;
             break;
         case 'update':
