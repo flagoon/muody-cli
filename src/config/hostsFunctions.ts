@@ -1,9 +1,10 @@
 import fs from 'fs';
+import { Map } from 'immutable';
 import util from 'util';
 
 import { IArgs } from '../helpers/IArgs';
 import { default as hosts } from './hosts.json';
-import { IHosts } from './IHosts';
+import { IHostData, IHosts } from './IHosts';
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -28,21 +29,28 @@ export const showHostsContent = async (hostname: string = null): Promise<IHosts>
     return JSON.parse(hostFile);
 };
 
-export const handleJSONFile = async (command: string, args: IArgs): Promise<IHosts> => {
+export const createIHostObject = (args: IArgs): IHosts => {
+    const { host, ip = '', login = '', password = '' } = args;
+
+    return { [host]: { ip, login, password } }; // {host: { ip: ip, login: login, password: password }}
+};
+
+export const handleJSONFile = async (command: string, args: IArgs): Promise<Map<string, IHostData>> => {
     const hostFile: IHosts = await showHostsContent();
+    const mapHostFile: Map<string, IHostData> = Map(hostFile);
+    const newHostToAdd = createIHostObject(args);
 
     switch (command) {
         case 'add':
+            const increassedHosts: IHosts = createIHostObject(args);
+            console.log(createIHostObject(increassedHosts));
+            // const addedHosts: Map<string, IHostData> = mapHostFile.set;
             break;
         case 'update':
             break;
         case 'delete':
-            console.log(args);
-            const test = await showHostsContent(args.host);
-            console.log(test);
-            const { zero = test.host, ...newHostFile } = hostFile;
-            console.log(newHostFile);
-            return Promise.resolve(newHostFile);
+            const reducedHosts: Map<string, IHostData> = mapHostFile.delete(args.host);
+            return Promise.resolve(reducedHosts);
     }
 
 };

@@ -16,8 +16,8 @@ console.log(chalk.yellowBright(showLogo('Muody')));
 
 const { _: mainCommands, $0: source, ...args } = argv;
 
-handleJSONFile('delete', args).then(res => {
+handleJSONFile('add', args).then(res => {
     console.log('----');
-    console.log(res);
+    console.log(JSON.stringify(res));
     console.log('----');
 });
