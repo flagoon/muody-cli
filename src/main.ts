@@ -4,8 +4,7 @@ import chalk from 'chalk';
 
 import fs from 'fs';
 import util from 'util';
-import { deleteHost, handleJSONFile, showHostsContent } from './config/hostsFunctions';
-import { IHosts } from './config/IHosts';
+import { handleJSONFile } from './config/hostsFunctions';
 import { argv } from './helpers/argv';
 import { showLogo } from './helpers/showLogo';
 
@@ -16,8 +15,7 @@ console.log(chalk.yellowBright(showLogo('Muody')));
 
 const { _: mainCommands, $0: source, ...args } = argv;
 
-handleJSONFile('add', args).then(res => {
-    console.log('----');
-    console.log(JSON.stringify(res));
-    console.log('----');
+handleJSONFile(mainCommands[0], args).then(res => {
+    const stringifiedResponse: string = JSON.stringify(res);
+    writeFile('./src/config/hosts.json', stringifiedResponse);
 });
