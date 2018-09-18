@@ -3,6 +3,6 @@ export interface IHosts {
 }
 export interface IHostData {
     ip: string;
-    login: string;
-    password: string;
+    login?: string;
+    password?: string;
 }
