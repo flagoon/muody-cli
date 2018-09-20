@@ -17,5 +17,9 @@ const { _: mainCommands, $0: source, ...args } = argv;
 
 handleJSONFile(mainCommands[0], args).then(res => {
     const stringifiedResponse: string = JSON.stringify(res);
-    writeFile('./src/config/hosts.json', stringifiedResponse);
+    // writeFile('./src/config/hosts.json', stringifiedResponse);
+
+    console.log(stringifiedResponse);
+}).catch(error => {
+    console.log(error);
 });

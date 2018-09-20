@@ -20,7 +20,6 @@ export const builder = (argv: Argv): Argv => {
     return argv
         .options({
             host: {
-                choices: getHostsList(),
                 describe: 'Open app using credentials for given host.',
                 type: 'string'
             },
@@ -35,7 +34,7 @@ export const builder = (argv: Argv): Argv => {
         .check((yargs: Arguments): boolean => {
             const { _, $0, ...options } = yargs;
 
-            // only valid options will pass. yargs.strict() don't cooperate.
+            // TOD: check if it's true: only valid options will pass. yargs.strict() don't cooperate.
             if (!isGivenOptionValid(Object.keys(options))) {
                 throw new Error(
                     'There are no options given, or one of them is invalid.'

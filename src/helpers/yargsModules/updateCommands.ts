@@ -7,7 +7,6 @@ export const describe =
 export const builder = (argv: Argv): Argv =>
     argv.options({
         host: {
-            choices: getHostsList(),
             demandOption: true,
             describe: 'give the host name to update',
             type: 'string'
