@@ -1,6 +1,7 @@
 import { Map } from 'immutable';
 import { Arguments, Argv } from 'yargs';
 
+import { isRegExp } from 'util';
 import { showHostsContent } from '../../config/hostsFunctions';
 import { IHostData, IHosts } from '../../config/IHosts';
 
@@ -15,17 +16,16 @@ export const builder = (argv: Argv): Argv =>
                 type: 'string'
             }
         })
-        .check(async (): Promise<boolean> => {
-            const hosts: IHosts = await showHostsContent();
-            const mappedHosts = Map(hosts);
-            const host = argv;
-            console.log(argv.parsed.);
-            // if (mappedHosts.has(argv.argv.host)) {
-            //     throw new Error("Can't delete profile that doesn't exist.");
-            //     return false;
-            // }
+        .check((args: Arguments): Promise<boolean> => {
+            showHostsContent().then(res => {
+                if (Object.keys(res).indexOf('stp')) {
+                    console.log('She is back.');
+                    return true;
+                }
+                return false;
+            });
 
-            return true;
+            throw new Error(`Host "${args.host}" doesn't exist.`);
         })
         .strict();
 export const handler = (argv: Argv): Argv => argv;

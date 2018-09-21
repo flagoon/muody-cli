@@ -52,24 +52,23 @@ export const handleJSONFile = async (command: string, args: IArgs): Promise<Map<
                 const changedHosts: Map<string, IHostData> = mapHostFile.set(args.host, newHostToAdd);
                 return Promise.resolve(changedHosts);
             }
-
             return Promise.reject('This profile already exists. Try muody update --host=...');
+
         case 'update':
             if (mapHostFile.has(args.host)) {
                 const changedHosts: Map<string, IHostData> = mapHostFile.set(args.host, newHostToAdd);
                 return Promise.resolve(changedHosts);
             }
-
             return Promise.reject("Can't update profile that doesn't exists.");
+
         case 'delete':
             if (mapHostFile.has(args.host)) {
                 const reducedHosts: Map<string, IHostData> = mapHostFile.delete(args.host);
                 return Promise.resolve(reducedHosts);
             }
 
-            return Promise.reject("This host doesn't exists.");
+            return Promise.reject(`Host "${args.host}" doesn't exists.`);
     }
-
 };
 
 export const deleteHost = async (hostname: string): Promise<object> => {
