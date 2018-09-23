@@ -1,5 +1,4 @@
 import { Arguments, Argv } from 'yargs';
-import { getHostsList } from '../../config/hostsFunctions';
 
 export const command = 'update';
 export const describe =

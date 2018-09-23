@@ -1,5 +1,4 @@
 import { Arguments, Argv } from 'yargs';
-import { getHostsList } from '../../config/hostsFunctions';
 
 const isGivenOptionValid = (options: string[]): boolean => {
     // valid options in application with default command.
@@ -34,7 +33,7 @@ export const builder = (argv: Argv): Argv => {
         .check((yargs: Arguments): boolean => {
             const { _, $0, ...options } = yargs;
 
-            // TOD: check if it's true: only valid options will pass. yargs.strict() don't cooperate.
+            // TODO: check if it's true: only valid options will pass. yargs.strict() don't cooperate.
             if (!isGivenOptionValid(Object.keys(options))) {
                 throw new Error(
                     'There are no options given, or one of them is invalid.'
