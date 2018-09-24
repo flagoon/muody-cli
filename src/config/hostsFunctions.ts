@@ -27,17 +27,8 @@ const isIHosts = (args: IArgs | IHosts): boolean => {
     return true;
 };
 
-export const createDataToAdd = (args: IArgs | IHosts): IHostData => {
-    let ip: string;
-    let login: string;
-    let password: string;
-
-    if (isIHosts(args)) {
-        const hostName: string = Object.keys(args)[0];
-        ({ ip, login, password } = args[hostName]);
-    } else {
-        ({ ip, login, password } = args);
-    }
+export const createDataToAdd = (args: IArgs): IHostData => {
+    const { ip, login, password } = args;
 
     const readyObject: IHostData = {};
 
@@ -58,6 +49,7 @@ export const handleJSONFile = async (command: string, args: IArgs): Promise<Map<
     let hostFile: IHosts;
     let mapHostFile: Map<string, IHostData>;
     let newHostToAdd: IHostData;
+    const { host } = args;
 
     try {
         hostFile = await showHostsContent();
@@ -69,27 +61,25 @@ export const handleJSONFile = async (command: string, args: IArgs): Promise<Map<
 
     switch (command) {
         case 'add':
-            if (!mapHostFile.has(args.host)) {
-                const changedHosts: Map<string, IHostData> = mapHostFile.set(args.host, newHostToAdd);
+            if (!mapHostFile.has(host)) {
+                const changedHosts: Map<string, IHostData> = mapHostFile.set(host, newHostToAdd);
                 return Promise.resolve(changedHosts);
             }
             return Promise.reject('This profile already exists. Try muody update --host=...');
 
         case 'update':
-            if (mapHostFile.has(args.host)) {
-                const hostToUpdate: IHosts = await showHostsContent(args.host);
-                const dataToUpdate: IHostData = createDataToAdd(hostToUpdate);
-                const updatedData: IHostData = Object.assign({}, dataToUpdate, newHostToAdd);
-                const changedHosts: Map<string, IHostData> = mapHostFile.set(args.host, updatedData);
+            if (mapHostFile.has(host)) {
+                const updatedData: IHostData = Object.assign({}, hostFile[host], newHostToAdd);
+                const changedHosts: Map<string, IHostData> = mapHostFile.set(host, updatedData);
                 return Promise.resolve(changedHosts);
             }
             return Promise.reject("Can't update profile that doesn't exists.");
 
         case 'delete':
-            if (mapHostFile.has(args.host)) {
-                const reducedHosts: Map<string, IHostData> = mapHostFile.delete(args.host);
+            if (mapHostFile.has(host)) {
+                const reducedHosts: Map<string, IHostData> = mapHostFile.delete(host);
                 return Promise.resolve(reducedHosts);
             }
-            return Promise.reject(`Host "${args.host}" doesn't exists!!!.`);
+            return Promise.reject(`Host "${host}" doesn't exists!!!.`);
     }
 };
