@@ -10,3 +10,4 @@ bfg-1.13.0.jar
 src/config/*.json
 .idea/**
 .nyc_output/**
+.vscode/
