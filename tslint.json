@@ -6,7 +6,19 @@
         "no-console": [false],
         "quotemark": [true, "single", "avoid-escape", "avoid-template"],
         "arrow-parens": false,
-        "trailing-comma": true
+        "trailing-comma": true,
+        "no-shadowed-variable": [
+            true,
+            {
+                "class": true,
+                "enum": true,
+                "function": false,
+                "interface": false,
+                "namespace": true,
+                "typeAlias": false,
+                "typeParameter": false
+            }
+        ]
     },
     "rulesDirectory": []
 }
