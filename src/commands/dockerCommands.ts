@@ -41,7 +41,7 @@ export const dockerCommands: IListr[] = [
   },
   {
     title: 'Remove all containers.',
-    enabled: ctx => ctx.containersAvailable, // !== false
+    enabled: ctx => ctx.containersAvailable !== false,
     task: () => removeAllContainers()
   },
   {
@@ -57,7 +57,7 @@ export const dockerCommands: IListr[] = [
 ];
 
 // retrieve list of available docker containers.
-const getAllIdFromDockerContainers = async () => {
+const getAllIdFromDockerContainers = async (): Promise<string[]> => {
   const listOfContainers = await execa('docker', ['ps', '-qa']);
   if (listOfContainers.stdout === '') {
     return null;
@@ -67,7 +67,7 @@ const getAllIdFromDockerContainers = async () => {
 };
 
 // retrieve list of available docker images.
-const getAllIdFromDockerImages = async () => {
+const getAllIdFromDockerImages = async (): Promise<string[]> => {
   const listOfImages = await execa('docker', ['images', '-qa']);
   if (listOfImages.stdout === '') {
     return null;
@@ -76,7 +76,7 @@ const getAllIdFromDockerImages = async () => {
   return listOfImages.stdout.split('\n');
 };
 
-export const getRunningContainers = async () => {
+export const getRunningContainers = async (): Promise<string[]> => {
   const listOFRunningContainers = await execa('docker', ['ps', '-q']);
   if (listOFRunningContainers.stdout === '') {
     return null;

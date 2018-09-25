@@ -3,6 +3,7 @@
 import execa from 'execa';
 import Listr from 'listr';
 
+import { IListr } from '../commands/IListr';
 import folders from '../config/folders.json';
 import { argv } from '../helpers/argv';
 
@@ -14,7 +15,7 @@ import {
 
 const { d, i, b, x } = argv;
 
-const moduleCommands = [
+const moduleCommands: IListr[] = [
   {
     title: 'Installing modules',
     enabled: () => i,
@@ -70,11 +71,11 @@ const moduleCommands = [
   }
 ];
 
-const extractFolderName = folder => folder.split('/').pop();
+const extractFolderName = (folder: string): string => folder.split('/').pop();
 
 folders.forEach(folder => {
-  const folderName = extractFolderName(folder);
-  const task = {
+  const folderName: string = extractFolderName(folder);
+  const task: IListr = {
     title: `Removing ${folderName}`,
     enabled: () => i,
     task: () => execa('rm', ['-rf', folder])
